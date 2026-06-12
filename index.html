@@ -132,6 +132,11 @@
   .opt.on{border-color:var(--green-l);background:var(--mint-2);}
   .opt.on .r{border-color:var(--green-l);border-width:6px;}
   .opt .t{font-weight:600;font-size:15px;}
+  .opt-card{align-items:flex-start;}
+  .opt-card .r{margin-top:2px;}
+  .opt-card .d{font-size:12.5px;color:var(--muted);margin-top:1px;font-weight:600;}
+  .opt-total{font-family:var(--mono);font-size:11.5px;color:var(--green-d);background:var(--mint);border-radius:7px;padding:2px 7px;margin-left:6px;font-weight:600;}
+  .blk-d{font-family:var(--mono);font-size:11.5px;color:var(--green-d);margin-left:6px;font-weight:600;}
 
   /* Alerts */
   .alert{background:var(--amber-bg);border:1px solid var(--amber-line);border-radius:13px;padding:14px 15px;font-size:14px;color:var(--amber);margin-bottom:12px;display:none;}
@@ -164,6 +169,8 @@
   .h-top{display:flex;align-items:center;gap:13px;padding:15px 16px;cursor:pointer;}
   .h-badge{width:42px;height:42px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;background:var(--mint);color:var(--green-d);}
   .h-badge.up{background:#EAF1F6;color:#2A5C7A;}
+  .h-badge.cd{background:#E6F2F4;color:#1F6E7A;}
+  .start-btn .dot.cd-dot{background:#E6F2F4;color:#1F6E7A;}
   .h-meta{flex:1;min-width:0;}
   .h-day{font-weight:700;font-size:15.5px;}
   .h-sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -212,6 +219,7 @@
   .cyc-cell{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;color:#fff;}
   .cyc-cell.cl{background:var(--green-l);border-color:var(--green-l);}
   .cyc-cell.cu{background:#2A5C7A;border-color:#2A5C7A;}
+  .cyc-cell.cc{background:#3D93A3;border-color:#3D93A3;}
   .cyc-cell.future{opacity:.45;}
   .cyc-cell.today{box-shadow:0 0 0 2px rgba(30,154,99,0.45);}
   .cyc-tally{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:600;margin-left:auto;min-width:42px;text-align:right;flex-shrink:0;}
@@ -286,7 +294,50 @@
       {name:"Dumbbell bicep curl", kind:"wr", sets:2, reps:"12", top:12, inc:2.5, weight:"10-12 lbs", note:"Elbows pinned to your sides the whole time."},
       {name:"Tricep pushdown (cable, rope)", kind:"wr", sets:2, reps:"12", top:12, inc:5, weight:"15-20 lbs", note:"Elbows stay tucked, full extension at the bottom."},
       {name:"Dead bug", kind:"reps", sets:2, reps:"8 / side", top:8, inc:1, weight:"", note:"Go slow; lower back stays pressed to the floor."}
-    ]}
+    ]},
+    cardioday:{label:"Cardio Day", short:"Cardio", exercises:[],
+      zone:"For fat loss you don't need to go hard — moderate steady effort burns more fat as fuel than going all-out. Target Zone 2: breathing noticeably but still able to hold a broken conversation, roughly 100–116 bpm if the machine tracks heart rate.",
+      options:{
+        A:{name:"The Steady Ride", tag:"Best for sensitive knee days", total:"45 min", totalNum:45,
+          desc:"45 steady, joint-friendly minutes — recumbent bike, treadmill walk, or the walking track. Simple and effective.",
+          blocks:[
+            {name:"Easy warm-up", d:"5 min", e:"Very light — just easing into movement"},
+            {name:"Steady moderate pace", d:"35 min", e:"Zone 2 — slightly breathless, can talk"},
+            {name:"Easy cool-down", d:"5 min", e:"Back to very light, let heart rate drop"}
+          ],
+          machines:["Recumbent bike","Treadmill walk (2-3% incline)","Walking track"],
+          machineNotes:{
+            "Recumbent bike":"Find a resistance where your legs are working but your knees never feel strained — go up one notch every 2–3 weeks as fitness improves. Keep cadence comfortable and rhythmic, around 70–80 RPM if the bike displays it: not so slow your knees take the strain, not so fast it feels frantic.",
+            "Treadmill walk (2-3% incline)":"Set a 2–3% incline and a brisk-but-conversational pace — the incline does the work without pounding the knees. Never a run if your knees are unhappy today.",
+            "Walking track":"Settle into a steady, rhythmic pace you could hold all day — slightly breathless but still able to talk. Tall posture, relaxed shoulders, let the arms swing."
+          },
+          note:"Find a resistance where your legs are working but your knees never feel strained — go up one notch every 2–3 weeks as fitness improves.",
+          extra:"resistance"},
+        B:{name:"The Mixed Circuit", tag:"Good energy days", total:"44 min", totalNum:44,
+          desc:"Rotating between machines keeps it interesting, reduces repetitive stress on any one joint, and works your cardiovascular system from different angles.",
+          blocks:[
+            {name:"Warm-up — recumbent bike", d:"5 min", e:"Easy"},
+            {name:"Block 1 — recumbent bike", d:"12 min", e:"Zone 2 steady"},
+            {name:"Block 2 — treadmill, 2–3% incline walk", d:"12 min", e:"Zone 2 steady"},
+            {name:"Block 3 — rowing machine", d:"10 min", e:"Moderate — focus on smooth technique"},
+            {name:"Cool-down — recumbent bike", d:"5 min", e:"Very easy"}
+          ],
+          note:"New to the rower? Ask a staff member to show you the technique — drive with the legs first, lean back slightly, then pull the handle to your lower chest. A phenomenal full-body, zero-impact exercise and exceptional for fat burning."},
+        C:{name:"Gentle Intervals", tag:"Strong days — builds fitness faster", total:"34 min", totalNum:34,
+          desc:"Recumbent bike or treadmill. Gentle pushes, not sprints — a conversation between easy and moderately hard.",
+          blocks:[
+            {name:"Warm-up", d:"5 min", e:"Easy"},
+            {name:"Intervals — 3 min moderate, 1 min push", d:"6 rounds · 24 min", e:"Zone 2, then Zone 3 on the push: breathing harder, can't chat comfortably"},
+            {name:"Easy cool-down", d:"5 min", e:"Very light"}
+          ],
+          note:"On treadmill days the push is simply a faster walk or a slight incline increase — never a run if your knees are unhappy that day.",
+          extra:"rounds"}
+      },
+      choose:[
+        {feel:"Knees stiff, tired, low energy", pick:"A — Steady Ride"},
+        {feel:"Good energy, want variety", pick:"B — Mixed Circuit"},
+        {feel:"Feeling strong, want a challenge", pick:"C — Gentle Intervals"}
+      ]}
   };
   var KINDS={wr:1,time:1,reps:1,steps:1};
 
@@ -318,7 +369,7 @@
   function normalizeSession(s){
     if(!s||typeof s!=="object") return null;
     if(typeof s.date!=="string"||isNaN(Date.parse(s.date))) return null;
-    if(s.dayType!=="lower"&&s.dayType!=="upper") return null;
+    if(s.dayType!=="lower"&&s.dayType!=="upper"&&s.dayType!=="cardioday") return null;
     // a day-only date would parse as UTC midnight and skew the local day
     var dateStr=/^\d{4}-\d{2}-\d{2}$/.test(s.date)?parseDay(s.date).toISOString():s.date;
     var out={
@@ -339,6 +390,16 @@
         var sets=Array.isArray(e.sets)?e.sets.map(function(st){return normalizeSet(kind,st);}):[];
         out.exercises.push({name:String(e.name), kind:kind, sets:sets});
       });
+    }
+    if(s.dayType==="cardioday"){
+      out.option=(s.option==="A"||s.option==="B"||s.option==="C")?s.option:"";
+      var nb=out.option?PROGRAM.cardioday.options[out.option].blocks.length:0;
+      out.blocks=[];
+      for(var bi=0;bi<nb;bi++) out.blocks.push(!!(Array.isArray(s.blocks)&&s.blocks[bi]));
+      out.minutes=ns(s.minutes);
+      out.resistance=ns(s.resistance);
+      out.rounds=ns(s.rounds);
+      out.machine=(PROGRAM.cardioday.options.A.machines.indexOf(s.machine)!==-1)?s.machine:"";
     }
     return out;
   }
@@ -529,12 +590,14 @@
       for(var i=0;i<e.sets;i++) sets.push(normalizeSet(e.kind,{}));
       return {name:e.name, kind:e.kind, sets:sets};
     });
-    return {date:todayISO(), dayType:type,
+    var s={date:todayISO(), dayType:type,
       warmup:PROGRAM.warmup.map(function(){return false;}),
       exercises:ex,
       cardio:{type:"",minutes:""},
       cooldown:PROGRAM.cooldown.map(function(){return false;}),
       notes:"", kneeFlag:false};
+    if(type==="cardioday"){ s.option=""; s.blocks=[]; s.minutes=""; s.resistance=""; s.rounds=""; s.machine=""; }
+    return s;
   }
   // align a session copy's exercises with the program: consume by index AND kind
   // (duplicates survive; kind-mismatched data is never coerced into the wrong
@@ -600,9 +663,16 @@
         sess.exercises[ei].sets.push(o);
       });
     } else if(step===N+1){
-      var sel=$("cardio-type"); var min=$("cardio-min");
-      if(sel) sess.cardio.type=sel.value;
-      if(min) sess.cardio.minutes=min.value.trim();
+      if(sess.dayType==="cardioday"){
+        var cm=$("cd-min"); if(cm) sess.minutes=cm.value.trim();
+        var cr=$("cd-res"); if(cr) sess.resistance=cr.value.trim();
+        var co=$("cd-rounds"); if(co) sess.rounds=co.value.trim();
+        var cma=$("cd-machine"); if(cma) sess.machine=cma.value;
+      } else {
+        var sel=$("cardio-type"); var min=$("cardio-min");
+        if(sel) sess.cardio.type=sel.value;
+        if(min) sess.cardio.minutes=min.value.trim();
+      }
     } else if(step===N+3){
       var nt=$("notes"); if(nt) sess.notes=nt.value;
       var ed=$("edit-date");
@@ -697,7 +767,8 @@
         var b=counts.weeks[w].days[d];
         var cls="cyc-cell"; var inner="";
         if(b.count){
-          cls+= b.types[b.types.length-1]==="upper"?" cu":" cl";
+          var bt=b.types[b.types.length-1];
+          cls+= bt==="upper"?" cu":(bt==="cardioday"?" cc":" cl");
           if(b.count>1) inner=b.count;
         } else if(cIso>tIso) cls+=" future";
         if(cIso===tIso) cls+=" today";
@@ -768,14 +839,18 @@
     h+='<h2 class="section">Start a session</h2>';
     h+='<button class="start-btn" data-start="lower"><div class="dot">L</div><div><div class="lbl">Lower Body + Core</div><div class="sub">Days 1 &amp; 3</div></div><div class="go">&rsaquo;</div></button>';
     h+='<button class="start-btn" data-start="upper"><div class="dot">U</div><div><div class="lbl">Upper Body + Core</div><div class="sub">Days 2 &amp; 4</div></div><div class="go">&rsaquo;</div></button>';
+    h+='<button class="start-btn" data-start="cardioday"><div class="dot cd-dot">C</div><div><div class="lbl">Cardio Day</div><div class="sub">Once a week &middot; between strength days &middot; 34-45 min</div></div><div class="go">&rsaquo;</div></button>';
 
     var recent=DB.sessions.slice().sort(function(a,b){return a.date<b.date?1:-1;}).slice(0,3);
     if(recent.length){
       h+='<h2 class="section">Recent</h2>';
       recent.forEach(function(s){
+        var bCls=s.dayType==="upper"?"up":(s.dayType==="cardioday"?"cd":"");
+        var bTxt=s.dayType==="upper"?"U":(s.dayType==="cardioday"?"C":"L");
+        var lbl=s.dayType==="cardioday"?"Cardio Day":(PROGRAM[s.dayType].short+" Body");
         h+='<div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;">'+
-           '<div class="h-badge '+(s.dayType==="upper"?"up":"")+'">'+(s.dayType==="upper"?"U":"L")+'</div>'+
-           '<div style="flex:1;"><div class="h-day">'+PROGRAM[s.dayType].short+' Body</div>'+
+           '<div class="h-badge '+bCls+'">'+bTxt+'</div>'+
+           '<div style="flex:1;"><div class="h-day">'+lbl+'</div>'+
            '<div class="h-sub">'+fmtDate(s.date)+(s._edited?"  ·  amended":"")+'</div></div></div>';
       });
     }
@@ -819,9 +894,70 @@
     return h;
   }
 
+  // cardio day, step 0: zone guidance + the three option cards + how-to-choose
+  function cardioChooserHTML(){
+    var CD=PROGRAM.cardioday;
+    var h='<div class="card" style="padding:14px 16px;"><div style="font-size:13.5px;color:#3A4A40;"><b>Easy does it.</b> '+esc(CD.zone)+'</div></div>';
+    if(!editingRef){
+      var lastLower=lastSessionOfType("lower");
+      if(lastLower&&lastLower.kneeFlag){
+        h+='<div class="alert show"><b>Knees were flagged on your last lower day.</b> Option A is the friendly choice today.</div>';
+      }
+    }
+    ["A","B","C"].forEach(function(k){
+      var o=CD.options[k];
+      var on=sess.option===k;
+      h+='<button type="button" class="opt opt-card'+(on?" on":"")+'" data-opt="'+k+'" aria-pressed="'+(on?"true":"false")+'">'+
+         '<div class="r"></div><div style="flex:1;"><div class="t">'+k+' — '+esc(o.name)+' <span class="opt-total">'+esc(o.total)+'</span></div>'+
+         '<div class="d">'+esc(o.tag)+'</div>'+
+         '<div style="font-size:13px;color:#3A4A40;margin-top:6px;font-weight:400;">'+esc(o.desc)+'</div></div></button>';
+    });
+    h+='<div class="card" style="padding:14px 16px;"><div class="h-tag" style="margin:0 0 4px;">How to choose</div>';
+    CD.choose.forEach(function(c){
+      h+='<div class="h-row"><span class="nm" style="font-weight:500;">'+esc(c.feel)+'</span><span class="vl">'+esc(c.pick)+'</span></div>';
+    });
+    h+='<div style="font-size:12.5px;color:var(--muted);margin-top:8px;">There&rsquo;s no wrong choice — Option A on a tough day is infinitely better than skipping entirely.</div></div>';
+    return h;
+  }
+
+  // cardio day, step 1: the chosen option's phase blocks + actuals
+  function cardioBlocksHTML(){
+    var o=PROGRAM.cardioday.options[sess.option];
+    var mach=o.machines?(sess.machine||o.machines[0]):"";
+    var cue=o.machineNotes?(o.machineNotes[mach]||o.note):o.note;
+    var h='<div class="card" style="padding:14px 16px;">';
+    h+='<div class="chips" style="margin-bottom:10px;"><span class="chip">'+esc(o.total)+' total</span><span class="chip w">'+esc(o.tag)+'</span></div>';
+    if(o.machines){
+      h+='<label class="field-l">Activity</label><select id="cd-machine" aria-label="Activity" style="margin-bottom:12px;">';
+      o.machines.forEach(function(m){ h+='<option'+(mach===m?" selected":"")+'>'+esc(m)+'</option>'; });
+      h+='</select>';
+    }
+    h+='<div class="cue" style="margin-bottom:0;">'+esc(cue)+'</div>';
+    h+='</div>';
+    o.blocks.forEach(function(b,i){
+      h+='<button type="button" class="check'+(sess.blocks[i]?" on":"")+'" data-blk="'+i+'" aria-pressed="'+(sess.blocks[i]?"true":"false")+'"><div class="box">'+(sess.blocks[i]?"&#10003;":"")+'</div>'+
+         '<div><div class="t">'+esc(b.name)+' <span class="blk-d">'+esc(b.d)+'</span></div><div class="d">'+esc(b.e)+'</div></div></button>';
+    });
+    h+='<div class="card">';
+    h+='<label class="field-l">Total minutes</label><div class="ig"><input type="number" id="cd-min" inputmode="numeric" min="0" placeholder="'+o.totalNum+'" value="'+valOf(sess.minutes)+'" aria-label="Total minutes"><span class="u">min</span></div>';
+    if(o.extra==="resistance"&&mach==="Recumbent bike"){
+      h+='<label class="field-l" style="margin-top:14px;">Bike resistance level</label><div class="ig"><input type="number" id="cd-res" inputmode="numeric" min="0" placeholder="e.g. 4" value="'+valOf(sess.resistance)+'" aria-label="Bike resistance level"><span class="u">lvl</span></div>';
+    } else if(o.extra==="resistance"&&mach==="Treadmill walk (2-3% incline)"){
+      h+='<label class="field-l" style="margin-top:14px;">Incline</label><div class="ig"><input type="number" id="cd-res" inputmode="decimal" min="0" placeholder="2-3" value="'+valOf(sess.resistance)+'" aria-label="Treadmill incline percent"><span class="u">%</span></div>';
+    }
+    if(o.extra==="rounds"){
+      h+='<label class="field-l" style="margin-top:14px;">Interval rounds completed</label><div class="ig"><input type="number" id="cd-rounds" inputmode="numeric" min="0" placeholder="6" value="'+valOf(sess.rounds)+'" aria-label="Interval rounds completed"><span class="u">rds</span></div>';
+    }
+    h+='</div>';
+    return h;
+  }
+
   function renderSession(){
     var P=PROGRAM[sess.dayType]; var N=P.exercises.length; var h="";
-    if(step===0){
+    if(step===0&&sess.dayType==="cardioday"){
+      h+=sheadHTML("Cardio Day","Pick today's ride · sustained fat burn, Zone 2");
+      h+=cardioChooserHTML();
+    } else if(step===0){
       h+=sheadHTML("Warm-Up","Every session, every time");
       if(sess.dayType==="lower"){
         h+='<button type="button" class="check" id="knee-toggle" aria-pressed="'+(sess.kneeFlag?"true":"false")+'" style="'+(sess.kneeFlag?"background:var(--mint-2);border-color:#EBD9A6;":"border-color:var(--line);")+'">'+
@@ -885,6 +1021,10 @@
         }
       }
       h+='</div>';
+    } else if(step===N+1&&sess.dayType==="cardioday"){
+      var co=PROGRAM.cardioday.options[sess.option];
+      h+=sheadHTML(sess.option+" — "+co.name, co.total+" · "+co.tag);
+      h+=cardioBlocksHTML();
     } else if(step===N+1){
       h+=sheadHTML("Cardio","After strength · 10-15 min target");
       h+='<div class="card">';
@@ -897,7 +1037,9 @@
       h+='<input type="hidden" id="cardio-type" value="'+esc(sess.cardio.type)+'">';
       h+='</div>';
     } else if(step===N+2){
-      h+=sheadHTML("Cool-Down","Right chest &amp; shoulder mobility");
+      h+=sheadHTML("Cool-Down", sess.dayType==="cardioday"
+        ? "Muscles are warm — ideal time for the right-side mobility work"
+        : "Right chest &amp; shoulder mobility");
       PROGRAM.cooldown.forEach(function(w,i){
         h+='<button type="button" class="check'+(sess.cooldown[i]?" on":"")+'" data-cd="'+i+'" aria-pressed="'+(sess.cooldown[i]?"true":"false")+'"><div class="box">'+(sess.cooldown[i]?"&#10003;":"")+'</div>'+
            '<div><div class="t">'+esc(w.name)+'</div><div class="d">'+esc(w.d)+'</div></div></button>';
@@ -992,6 +1134,46 @@
     }
     bindKnee("knee-toggle","knee-alert");
     bindKnee("knee-toggle2","knee-alert2");
+    // cardio-day option cards (switching options resets the block checklist)
+    Array.prototype.forEach.call(document.querySelectorAll("[data-opt]"),function(el){
+      el.addEventListener("click",function(){
+        var o=el.dataset.opt;
+        if(sess.option!==o){
+          sess.option=o;
+          sess.blocks=PROGRAM.cardioday.options[o].blocks.map(function(){return false;});
+          sess.resistance=""; sess.rounds="";
+          sess.machine = o==="A" ? PROGRAM.cardioday.options.A.machines[0] : "";
+        }
+        Array.prototype.forEach.call(document.querySelectorAll("[data-opt]"),function(x){
+          x.classList.remove("on"); x.setAttribute("aria-pressed","false");
+        });
+        el.classList.add("on"); el.setAttribute("aria-pressed","true");
+        draftSave();
+      });
+    });
+    // cardio-day activity select (Option A): swaps the cue and the extra input
+    var cdm=$("cd-machine");
+    if(cdm){
+      var prevMach=cdm.value;
+      cdm.addEventListener("change",function(){
+        gather(); // pull minutes/extra into sess before the re-render
+        if(cdm.value!==prevMach) sess.resistance=""; // lvl and % aren't the same number
+        sess.machine=cdm.value;
+        draftSave();
+        render();
+      });
+    }
+    // cardio-day phase blocks
+    Array.prototype.forEach.call(document.querySelectorAll("[data-blk]"),function(el){
+      el.addEventListener("click",function(){
+        var i=+el.dataset.blk;
+        sess.blocks[i]=!sess.blocks[i];
+        el.classList.toggle("on");
+        el.setAttribute("aria-pressed",sess.blocks[i]?"true":"false");
+        el.querySelector(".box").innerHTML=sess.blocks[i]?"✓":"";
+        draftSave();
+      });
+    });
     // set stamps: fill blanks from last time, mark done, start the rest timer
     Array.prototype.forEach.call(document.querySelectorAll(".set-row .stamp"),function(st){
       st.addEventListener("click",function(){
@@ -1053,6 +1235,10 @@
     var b=$("back"); if(b) b.addEventListener("click",function(){ gather(); draftSave(); step--; render(); });
     $("next").addEventListener("click",function(){
       gather();
+      if(sess.dayType==="cardioday"&&step===0&&!sess.option){
+        toast("Pick an option first — A, B, or C");
+        return;
+      }
       if(isLast){ saveSession(); }
       else { draftSave(); step++; render(); }
     });
@@ -1068,6 +1254,11 @@
       cardio:sess.cardio, cooldown:sess.cooldown,
       notes:sess.notes, kneeFlag:sess.kneeFlag
     };
+    if(sess.dayType==="cardioday"){
+      finished.option=sess.option; finished.blocks=sess.blocks;
+      finished.minutes=sess.minutes; finished.resistance=sess.resistance; finished.rounds=sess.rounds;
+      finished.machine=sess.machine;
+    }
     if(wasEdit) finished._edited=Date.now();
     // canonicalize through the same normalization load() applies, so the durable
     // record matches what a reload reproduces (also strips draft-only _done flags)
@@ -1101,6 +1292,12 @@
     var sorted=DB.sessions.slice().sort(function(a,b){return a.date<b.date?-1:1;});
     var map={}, order=[];
     sorted.forEach(function(s){
+      // cardio days chart total minutes — the simplest honest fitness trend
+      if(s.dayType==="cardioday"&&s.minutes!==""&&s.minutes!=null){
+        var cn="Cardio day (minutes)";
+        if(!map[cn]){ map[cn]=[]; order.push(cn); }
+        map[cn].push({date:s.date, v:Number(s.minutes), vol:0, unit:"min"});
+      }
       (s.exercises||[]).forEach(function(e){
         var v=topVal(e.kind,e);
         if(v==null) return;
@@ -1201,11 +1398,35 @@
       var P=PROGRAM[s.dayType];
       var doneEx=s.exercises.filter(function(e){return e.sets.some(function(st){return fmtSet(e.kind,st);});}).length;
       var sub=fmtDate(s.date)+(s._edited?"  ·  amended":"");
+      var bCls=s.dayType==="upper"?"up":(s.dayType==="cardioday"?"cd":"");
+      var bTxt=s.dayType==="upper"?"U":(s.dayType==="cardioday"?"C":"L");
+      var cOpt=(s.dayType==="cardioday"&&s.option)?PROGRAM.cardioday.options[s.option]:null;
+      var title=s.dayType==="cardioday"
+        ? ('Cardio Day'+(cOpt?(' &middot; '+esc(cOpt.name)):''))
+        : (P.short+' Body + Core &middot; '+doneEx+' exercise'+(doneEx===1?"":"s"));
       h+='<div class="h-item" data-t="'+(s._t||"")+'">';
-      h+='<div class="h-top" role="button" tabindex="0" aria-expanded="false"><div class="h-badge '+(s.dayType==="upper"?"up":"")+'">'+(s.dayType==="upper"?"U":"L")+'</div>'+
-         '<div class="h-meta"><div class="h-day">'+P.short+' Body + Core &middot; '+doneEx+' exercise'+(doneEx===1?"":"s")+'</div><div class="h-sub">'+sub+'</div></div>'+
+      h+='<div class="h-top" role="button" tabindex="0" aria-expanded="false"><div class="h-badge '+bCls+'">'+bTxt+'</div>'+
+         '<div class="h-meta"><div class="h-day">'+title+'</div><div class="h-sub">'+sub+'</div></div>'+
          '<div class="chev">&#9660;</div></div>';
       h+='<div class="h-body">';
+      if(s.dayType==="cardioday"){
+        if(cOpt){
+          h+='<div class="h-tag">'+esc(s.option)+' — '+esc(cOpt.name)+'</div>';
+          cOpt.blocks.forEach(function(b,bi){
+            var done=!!(s.blocks&&s.blocks[bi]);
+            h+='<div class="h-row"><span class="nm" style="'+(done?"":"color:var(--muted);font-weight:500;")+'">'+(done?"&#10003; ":"")+esc(b.name)+'</span><span class="vl">'+esc(b.d)+'</span></div>';
+          });
+        }
+        if(s.machine) h+='<div class="h-row"><span class="nm">Activity</span><span class="vl">'+esc(s.machine)+'</span></div>';
+        if(s.minutes) h+='<div class="h-row"><span class="nm">Total time</span><span class="vl">'+esc(s.minutes)+' min</span></div>';
+        if(s.resistance){
+          var isTread=s.machine==="Treadmill walk (2-3% incline)";
+          h+='<div class="h-row"><span class="nm">'+(isTread?"Incline":"Bike resistance")+'</span><span class="vl">'+(isTread?(esc(s.resistance)+"%"):("L"+esc(s.resistance)))+'</span></div>';
+        }
+        if(s.rounds) h+='<div class="h-row"><span class="nm">Interval rounds</span><span class="vl">'+esc(s.rounds)+'</span></div>';
+        var cdOnly=s.cooldown.filter(Boolean).length;
+        h+='<div class="h-tag">Checklists</div><div class="h-row"><span class="nm">Cool-down stretches</span><span class="vl">'+cdOnly+'/'+PROGRAM.cooldown.length+'</span></div>';
+      } else {
       h+='<div class="h-tag">Strength</div>';
       s.exercises.forEach(function(e){
         var v=lastLine(e.kind,e); if(!v) return;
@@ -1219,6 +1440,7 @@
       }
       var wuC=s.warmup.filter(Boolean).length, cdC=s.cooldown.filter(Boolean).length;
       h+='<div class="h-tag">Checklists</div><div class="h-row"><span class="nm">Warm-up &amp; cool-down</span><span class="vl">'+wuC+'/'+PROGRAM.warmup.length+' &middot; '+cdC+'/'+PROGRAM.cooldown.length+'</span></div>';
+      }
       if(s.kneeFlag) h+='<div class="h-knee">&#9888; Knee discomfort flagged</div>';
       if(s.notes) h+='<div class="h-note">&ldquo;'+esc(s.notes)+'&rdquo;</div>';
       h+='<div class="h-actions"><button class="editb" data-edit="'+idx+'">Edit session</button>'+
@@ -1409,7 +1631,8 @@
   }
   function contentKey(s){
     return s.date+"|"+s.dayType+"|"+JSON.stringify(s.exercises)+"|"+JSON.stringify(s.cardio)+"|"+
-      JSON.stringify(s.warmup)+"|"+JSON.stringify(s.cooldown)+"|"+(s.kneeFlag?1:0)+"|"+s.notes;
+      JSON.stringify(s.warmup)+"|"+JSON.stringify(s.cooldown)+"|"+(s.kneeFlag?1:0)+"|"+
+      (s.option||"")+"|"+JSON.stringify(s.blocks||[])+"|"+(s.minutes||"")+"|"+(s.resistance||"")+"|"+(s.rounds||"")+"|"+(s.machine||"")+"|"+s.notes;
   }
   function importData(file){
     var reader=new FileReader();
