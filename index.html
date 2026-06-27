@@ -69,7 +69,7 @@
   .prompt .p-line{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:12.5px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.18);}
   .prompt .p-line:last-of-type{border-bottom:none;margin-bottom:10px;}
   .prompt .p-line .tag{opacity:.8;font-size:11px;}
-  .prompt .p-row{display:flex;gap:8px;}
+  .prompt .p-row{display:flex;gap:8px;flex-wrap:wrap;}
 
   /* Session header */
   .shead{padding:16px 2px 8px;}
@@ -96,6 +96,7 @@
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
   .chip{font-family:var(--mono);font-size:13px;font-weight:600;background:var(--mint);color:var(--green-d);padding:6px 11px;border-radius:9px;}
   .chip.w{background:#EEF1EF;color:var(--ink);}
+  .chip.eq{background:#F0F3F1;color:var(--muted);font-weight:500;}
   .cue{background:var(--mint-2);border-left:3px solid var(--green-l);border-radius:8px;padding:10px 13px;font-size:13.5px;color:#2C4035;margin-bottom:12px;}
   .last{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:6px;}
   .last b{color:var(--green-d);font-weight:600;}
@@ -170,7 +171,13 @@
   .h-badge{width:42px;height:42px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;background:var(--mint);color:var(--green-d);}
   .h-badge.up{background:#EAF1F6;color:#2A5C7A;}
   .h-badge.cd{background:#E6F2F4;color:#1F6E7A;}
+  .h-badge.fnd{background:#ECEBF6;color:#5B57A6;}
+  .h-badge.sc{background:#F7E8E0;color:#B05A36;}
+  .h-badge.cir{background:#F4E6EF;color:#9B4D7A;}
   .start-btn .dot.cd-dot{background:#E6F2F4;color:#1F6E7A;}
+  .start-btn .dot.fnd-dot{background:#ECEBF6;color:#5B57A6;}
+  .start-btn .dot.sc-dot{background:#F7E8E0;color:#B05A36;}
+  .start-btn .dot.cir-dot{background:#F4E6EF;color:#9B4D7A;font-size:15px;}
   .h-meta{flex:1;min-width:0;}
   .h-day{font-weight:700;font-size:15.5px;}
   .h-sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -220,6 +227,9 @@
   .cyc-cell.cl{background:var(--green-l);border-color:var(--green-l);}
   .cyc-cell.cu{background:#2A5C7A;border-color:#2A5C7A;}
   .cyc-cell.cc{background:#3D93A3;border-color:#3D93A3;}
+  .cyc-cell.cf{background:#5B57A6;border-color:#5B57A6;}
+  .cyc-cell.cs{background:#B05A36;border-color:#B05A36;}
+  .cyc-cell.ccr{background:#9B4D7A;border-color:#9B4D7A;}
   .cyc-cell.future{opacity:.45;}
   .cyc-cell.today{box-shadow:0 0 0 2px rgba(30,154,99,0.45);}
   .cyc-tally{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:600;margin-left:auto;min-width:42px;text-align:right;flex-shrink:0;}
@@ -260,6 +270,29 @@
   var KEY="cole-tracker-v2";
   var DRAFT_KEY=KEY+"-draft";
 
+  // shared blocks for the Foundation / Strength & Carry / Mobility & Circuit routines
+  var WARMUP2=[
+    {name:"Easy incline walk", d:"2-3 min"},
+    {name:"Leg swings (front-back)", d:"10 / side"},
+    {name:"Bodyweight glute bridges", d:"12 reps"},
+    {name:"Band pull-aparts", d:"15 reps"},
+    {name:"Arm circles", d:"10 each direction"},
+    {name:"Bodyweight squats to comfortable depth", d:"10 reps"}
+  ];
+  var COOLDOWN2=[
+    {name:"Cat-cow", d:"8 reps"},
+    {name:"World's greatest stretch", d:"5 / side"},
+    {name:"90/90 hip rotations", d:"8 / side"},
+    {name:"Standing hamstring stretch", d:"30s / side"},
+    {name:"Half-kneeling hip-flexor stretch", d:"30s / side"},
+    {name:"Doorway chest / pec stretch", d:"30s"},
+    {name:"Cross-body + overhead lat / triceps stretch", d:"30s / side"},
+    {name:"Band shoulder dislocates", d:"10 reps"},
+    {name:"Ankle dorsiflexion rocks", d:"10 / side"},
+    {name:"Child's pose", d:"30s"}
+  ];
+  var KNEEMSG2="Keep squats, leg press, and step-ups to a pain-free range (~90° or less) with a controlled descent — lean on hip thrusts and hamstring curls instead. Default cardio to an incline treadmill walk or the elliptical, not the recumbent bike.";
+
   var PROGRAM={
     warmup:[
       {name:"Recumbent bike or brisk treadmill walk", d:"5 minutes"},
@@ -276,7 +309,7 @@
       {name:"Pendulum shoulder circles (right arm)", d:"10 circles each direction"},
       {name:"Thread the needle (right side)", d:"20-30 seconds"}
     ],
-    cardio:["Recumbent bike","Treadmill walk (2-3% incline)","Rowing machine"],
+    cardio:["Treadmill walk (2-3% incline)","Elliptical","Rowing machine","Recumbent bike"],
     lower:{label:"Lower Body + Core", short:"Lower", exercises:[
       {name:"Goblet squat", kind:"wr", sets:3, reps:"12", top:12, inc:5, kneeGate:true, weight:"20 lbs", note:"Progress to 25 lbs when 12 reps feels easy."},
       {name:"Romanian deadlift (dumbbells)", kind:"wr", sets:3, reps:"10", top:10, inc:5, weight:"15-20 lbs", note:"Hips back, back flat, slide the dumbbells down your thighs."},
@@ -337,9 +370,62 @@
         {feel:"Knees stiff, tired, low energy", pick:"A — Steady Ride"},
         {feel:"Good energy, want variety", pick:"B — Mixed Circuit"},
         {feel:"Feeling strong, want a challenge", pick:"C — Gentle Intervals"}
+      ]},
+    foundation:{label:"Foundation", short:"Foundation", warmup:WARMUP2, cooldown:COOLDOWN2, kneeMsg:KNEEMSG2,
+      cardioNote:"Incline treadmill walk, ~10 min at 2–3% — or the elliptical. Skip the recumbent bike: it has flagged the knee before.",
+      exercises:[
+        {name:"Leg press (machine)", kind:"wr", sets:3, reps:"10-12", top:12, inc:10, kneeGate:true, weight:"140 lbs", equipment:"machine", note:"Stop around 90° knee bend; control the descent, no hard lockout at the top."},
+        {name:"Chest press (machine)", kind:"wr", sets:3, reps:"10-12", top:12, inc:5, weight:"55 lbs", equipment:"machine", note:"Shoulders down and back; lower slowly, don't snap the elbows straight."},
+        {name:"Seated cable row", kind:"wr", sets:3, reps:"12", top:12, inc:5, weight:"55 lbs", equipment:"cable", note:"Lead with the elbows, squeeze the shoulder blades; no rocking from the low back."},
+        {name:"Lying hamstring curl (machine)", kind:"wr", sets:3, reps:"12", top:12, inc:5, weight:"35 lbs", equipment:"machine", note:"Knee-friendly; slow on the way back, no swinging."},
+        {name:"Lat pulldown (cable machine)", kind:"wr", sets:3, reps:"12", top:12, inc:5, weight:"55 lbs", equipment:"cable", note:"Pull to the upper chest, elbows leading down; control the bar back up."},
+        {name:"Dumbbell lateral raise", kind:"wr", sets:3, reps:"12-15", top:15, inc:2.5, weight:"5-8 lbs", equipment:"dumbbell", note:"Replaces the overhead press — lead with the elbows, soft elbows, no shrug."},
+        {name:"Overhead DB triceps extension", kind:"wr", sets:3, reps:"12", top:12, inc:5, weight:"15-20 lbs", equipment:"dumbbell", note:"Free-weight triceps; elbows point up, full stretch at the bottom."},
+        {name:"Dead bug", kind:"reps", sets:3, reps:"12", top:12, inc:2, weight:"", equipment:"bodyweight", note:"Low back stays flat to the floor the whole time."},
+        {name:"Plank", kind:"time", sets:3, reps:"35 sec", top:35, inc:5, weight:"", equipment:"bodyweight", note:"Add ~5 seconds when 35 feels solid."}
+      ]},
+    strengthcarry:{label:"Strength & Carry", short:"Strength", warmup:WARMUP2, cooldown:COOLDOWN2, kneeMsg:KNEEMSG2,
+      cardioNote:"Optional — incline treadmill walk, 8–10 min. Fine to skip on a heavy day.",
+      exercises:[
+        {name:"Goblet squat (DB)", kind:"wr", sets:3, reps:"10-12", top:12, inc:5, kneeGate:true, weight:"25 lbs", equipment:"dumbbell", note:"Box-touch depth, controlled; keep the knees tracking over the toes."},
+        {name:"Romanian deadlift (DB)", kind:"wr", sets:3, reps:"10-12", top:12, inc:5, weight:"25 lbs", equipment:"dumbbell", note:"Hinge at the hips, soft knees, neutral spine; slide the dumbbells down the thighs."},
+        {name:"Incline dumbbell chest press", kind:"wr", sets:3, reps:"10-12", top:12, inc:5, weight:"15 lbs", equipment:"dumbbell", note:"Shoulder-friendlier press angle; lower slowly, no hard lockout."},
+        {name:"One-arm dumbbell row", kind:"wr", sets:3, reps:"10-12 / side", top:12, inc:5, weight:"25 lbs", equipment:"dumbbell", note:"Flat back, pull to the hip; no torso twist."},
+        {name:"Half-kneeling landmine press", kind:"wr", sets:3, reps:"8-10", top:10, inc:5, weight:"25-35 lbs", equipment:"barbell", note:"Joint-friendly vertical push; sub a lateral raise (5–8 lb) if there's no landmine."},
+        {name:"Dumbbell hammer curl", kind:"wr", sets:3, reps:"10-12", top:12, inc:5, weight:"10 lbs", equipment:"dumbbell", note:"Neutral grip, elbows pinned to your sides the whole time."},
+        {name:"Dumbbell skull crusher", kind:"wr", sets:3, reps:"10-12", top:12, inc:5, weight:"10-15 lbs", equipment:"dumbbell", note:"Free-weight triceps; lower to the forehead/behind, elbows stay still."},
+        {name:"Farmer's walk", kind:"steps", sets:3, reps:"40 steps", top:40, inc:5, weight:"30 lbs", equipment:"dumbbell", note:"Tall posture, braced core, steady even steps."},
+        {name:"Pallof press (cable/band)", kind:"reps", sets:2, reps:"10 / side", top:10, inc:2, weight:"", equipment:"cable", note:"Anti-rotation — resist the twist; sub a plank if the station's busy."}
+      ]},
+    circuit:{label:"Mobility & Circuit", short:"Circuit", warmup:WARMUP2, cooldown:COOLDOWN2, kneeMsg:KNEEMSG2,
+      intro:"Run stations 1–5 as a circuit: 2–3 rounds, lighter loads, smooth tempo, ~30–45s between stations. Then finish with the core stations. This is the flexibility day — take the full mobility cool-down at the end.",
+      cardioNote:"Steady Zone 2, 12–15 min — incline treadmill walk or elliptical (knee-friendly). Avoid the recumbent bike.",
+      exercises:[
+        {name:"Hip thrust / glute bridge", kind:"wr", sets:3, reps:"15", top:15, inc:5, weight:"15 lbs", equipment:"dumbbell", note:"Knee-friendly posterior work; squeeze hard at the top, ribs down."},
+        {name:"Chest press (cable or machine)", kind:"wr", sets:3, reps:"12-15", top:15, inc:5, weight:"moderate-light", equipment:"cable", note:"Smooth, controlled tempo; lighter load for the circuit."},
+        {name:"Step-up to low box", kind:"reps", sets:3, reps:"8-10 / side", top:10, inc:2, kneeGate:true, weight:"", equipment:"bodyweight", note:"Knee regression: lower box or partial range; sub leg press if any pain. Add light dumbbells only when pain-free."},
+        {name:"Seated row (machine)", kind:"wr", sets:3, reps:"12-15", top:15, inc:5, weight:"moderate", equipment:"machine", note:"Sit tall, squeeze the shoulder blades; no rocking."},
+        {name:"Dumbbell lateral raise", kind:"wr", sets:3, reps:"12-15", top:15, inc:2.5, weight:"5 lbs", equipment:"dumbbell", note:"Light and controlled; soft elbows, no shrug."},
+        {name:"Dead bug", kind:"reps", sets:3, reps:"12", top:12, inc:2, weight:"", equipment:"bodyweight", note:"Slow; low back pressed to the floor."},
+        {name:"Side plank", kind:"time", sets:3, reps:"20 sec / side", top:20, inc:5, weight:"", equipment:"bodyweight", note:"Stack the hips, steady breathing; drop to the knee if needed."},
+        {name:"Bird dog", kind:"reps", sets:3, reps:"8 / side", top:8, inc:1, weight:"", equipment:"bodyweight", note:"Slow and deliberate, no hip rock."}
       ]}
   };
   var KINDS={wr:1,time:1,reps:1,steps:1};
+
+  /* ---------- day-type helpers ---------- */
+  function warmupOf(t){ var p=PROGRAM[t]; return (p&&p.warmup)?p.warmup:PROGRAM.warmup; }
+  function cooldownOf(t){ var p=PROGRAM[t]; return (p&&p.cooldown)?p.cooldown:PROGRAM.cooldown; }
+  function hasKnee(t){ return t==="lower"||t==="foundation"||t==="strengthcarry"||t==="circuit"; }
+  function dayTitle(t){ return t==="cardioday"?"Cardio Day":PROGRAM[t].label; }
+  function badgeFor(t){
+    return t==="upper"?{cls:"up",txt:"U"}
+      :t==="cardioday"?{cls:"cd",txt:"C"}
+      :t==="foundation"?{cls:"fnd",txt:"F"}
+      :t==="strengthcarry"?{cls:"sc",txt:"S"}
+      :t==="circuit"?{cls:"cir",txt:"Cr"}
+      :{cls:"",txt:"L"};
+  }
 
   /* ---------- helpers ---------- */
   function esc(s){return (""+(s==null?"":s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
@@ -369,16 +455,17 @@
   function normalizeSession(s){
     if(!s||typeof s!=="object") return null;
     if(typeof s.date!=="string"||isNaN(Date.parse(s.date))) return null;
-    if(s.dayType!=="lower"&&s.dayType!=="upper"&&s.dayType!=="cardioday") return null;
+    if(s.dayType!=="lower"&&s.dayType!=="upper"&&s.dayType!=="cardioday"&&
+       s.dayType!=="foundation"&&s.dayType!=="strengthcarry"&&s.dayType!=="circuit") return null;
     // a day-only date would parse as UTC midnight and skew the local day
     var dateStr=/^\d{4}-\d{2}-\d{2}$/.test(s.date)?parseDay(s.date).toISOString():s.date;
     var out={
       date:dateStr, dayType:s.dayType,
       _t:(typeof s._t==="number"&&isFinite(s._t)&&s._t>0)?s._t:null,
-      warmup:PROGRAM.warmup.map(function(_,i){ return !!(Array.isArray(s.warmup)&&s.warmup[i]); }),
+      warmup:warmupOf(s.dayType).map(function(_,i){ return !!(Array.isArray(s.warmup)&&s.warmup[i]); }),
       exercises:[],
       cardio:{type:(s.cardio&&s.cardio.type)?String(s.cardio.type):"", minutes:ns(s.cardio&&s.cardio.minutes)},
-      cooldown:PROGRAM.cooldown.map(function(_,i){ return !!(Array.isArray(s.cooldown)&&s.cooldown[i]); }),
+      cooldown:cooldownOf(s.dayType).map(function(_,i){ return !!(Array.isArray(s.cooldown)&&s.cooldown[i]); }),
       notes:(typeof s.notes==="string")?s.notes:"",
       kneeFlag:!!s.kneeFlag
     };
@@ -595,10 +682,10 @@
       return {name:e.name, kind:e.kind, sets:sets};
     });
     var s={date:todayISO(), dayType:type,
-      warmup:PROGRAM.warmup.map(function(){return false;}),
+      warmup:warmupOf(type).map(function(){return false;}),
       exercises:ex,
       cardio:{type:"",minutes:""},
-      cooldown:PROGRAM.cooldown.map(function(){return false;}),
+      cooldown:cooldownOf(type).map(function(){return false;}),
       notes:"", kneeFlag:false};
     if(type==="cardioday"){ s.option=""; s.blocks=[]; s.minutes=""; s.resistance=""; s.rounds=""; s.machine=""; }
     return s;
@@ -774,7 +861,8 @@
         var cls="cyc-cell"; var inner="";
         if(b.count){
           var bt=b.types[b.types.length-1];
-          cls+= bt==="upper"?" cu":(bt==="cardioday"?" cc":" cl");
+          var CMAP={lower:"cl",upper:"cu",cardioday:"cc",foundation:"cf",strengthcarry:"cs",circuit:"ccr"};
+          cls+=" "+(CMAP[bt]||"cl");
           if(b.count>1) inner=b.count;
         } else if(cIso>tIso) cls+=" future";
         if(cIso===tIso) cls+=" today";
@@ -815,21 +903,22 @@
     h+='<div class="bar"><div class="brand">Training<span>.</span></div>'+tabsHTML("home")+'</div>';
 
     var draft=draftLoad();
-    var sgL=suggsFor("lower"), sgU=suggsFor("upper");
+    var STRENGTH_TYPES=["foundation","strengthcarry","circuit","lower","upper"];
+    var sugGroups=STRENGTH_TYPES.map(function(t){ return {type:t, list:suggsFor(t)}; }).filter(function(g){ return g.list.length; });
     if(draft){
       h+='<div class="prompt"><h3>Unfinished session</h3>'+
          '<p>A '+esc(PROGRAM[draft.sess.dayType].short)+' session from '+esc(fmtDay(draft.sess.date))+' was saved as you went.</p>'+
          '<div class="p-row"><button id="draft-resume">Resume</button><button id="draft-discard">Discard</button></div></div>';
-    } else if(sgL.length||sgU.length){
+    } else if(sugGroups.length){
       // the suggestions card fulfills the periodic-nudge role; stamp the check-in
       // so it can't resurface months overdue the moment suggestions briefly vanish
       if(progressionDue()){ DB.meta.lastProg=todayISO(); save(); }
       h+='<div class="prompt"><h3>Progression ready</h3><p>Earned last time — these will pre-fill when you start:</p>';
-      sgL.forEach(function(x){ h+='<div class="p-line"><span>'+esc(x.name)+' <span class="tag">· Lower</span></span><span>'+x.s.from+' &rarr; '+x.s.to+' '+x.s.unit+'</span></div>'; });
-      sgU.forEach(function(x){ h+='<div class="p-line"><span>'+esc(x.name)+' <span class="tag">· Upper</span></span><span>'+x.s.from+' &rarr; '+x.s.to+' '+x.s.unit+'</span></div>'; });
+      sugGroups.forEach(function(g){ g.list.forEach(function(x){
+        h+='<div class="p-line"><span>'+esc(x.name)+' <span class="tag">· '+esc(PROGRAM[g.type].short)+'</span></span><span>'+x.s.from+' &rarr; '+x.s.to+' '+x.s.unit+'</span></div>';
+      }); });
       h+='<div class="p-row">';
-      if(sgL.length) h+='<button data-start="lower">Start Lower</button>';
-      if(sgU.length) h+='<button data-start="upper">Start Upper</button>';
+      sugGroups.forEach(function(g){ h+='<button data-start="'+g.type+'">Start '+esc(PROGRAM[g.type].short)+'</button>'; });
       h+='</div></div>';
     } else if(progressionDue()){
       h+='<div class="prompt"><h3>Two-week check-in</h3>'+
@@ -843,20 +932,21 @@
        '</div>';
     h+=cycleHTML();
     h+='<h2 class="section">Start a session</h2>';
-    h+='<button class="start-btn" data-start="lower"><div class="dot">L</div><div><div class="lbl">Lower Body + Core</div><div class="sub">Days 1 &amp; 3</div></div><div class="go">&rsaquo;</div></button>';
-    h+='<button class="start-btn" data-start="upper"><div class="dot">U</div><div><div class="lbl">Upper Body + Core</div><div class="sub">Days 2 &amp; 4</div></div><div class="go">&rsaquo;</div></button>';
+    h+='<button class="start-btn" data-start="foundation"><div class="dot fnd-dot">F</div><div><div class="lbl">Foundation</div><div class="sub">Machine-supported full body &middot; joint-friendly default</div></div><div class="go">&rsaquo;</div></button>';
+    h+='<button class="start-btn" data-start="strengthcarry"><div class="dot sc-dot">S</div><div><div class="lbl">Strength &amp; Carry</div><div class="sub">Free-weight, functional &middot; highest-energy day</div></div><div class="go">&rsaquo;</div></button>';
+    h+='<button class="start-btn" data-start="circuit"><div class="dot cir-dot">Cr</div><div><div class="lbl">Mobility &amp; Circuit</div><div class="sub">Circuit + extended mobility &middot; the flexibility day</div></div><div class="go">&rsaquo;</div></button>';
     h+='<button class="start-btn" data-start="cardioday"><div class="dot cd-dot">C</div><div><div class="lbl">Cardio Day</div><div class="sub">Once a week &middot; between strength days &middot; 34-45 min</div></div><div class="go">&rsaquo;</div></button>';
+    h+='<button class="start-btn" data-start="lower"><div class="dot">L</div><div><div class="lbl">Lower Body + Core</div><div class="sub">Original program</div></div><div class="go">&rsaquo;</div></button>';
+    h+='<button class="start-btn" data-start="upper"><div class="dot">U</div><div><div class="lbl">Upper Body + Core</div><div class="sub">Original program</div></div><div class="go">&rsaquo;</div></button>';
 
     var recent=DB.sessions.slice().sort(function(a,b){return a.date<b.date?1:-1;}).slice(0,3);
     if(recent.length){
       h+='<h2 class="section">Recent</h2>';
       recent.forEach(function(s){
-        var bCls=s.dayType==="upper"?"up":(s.dayType==="cardioday"?"cd":"");
-        var bTxt=s.dayType==="upper"?"U":(s.dayType==="cardioday"?"C":"L");
-        var lbl=s.dayType==="cardioday"?"Cardio Day":(PROGRAM[s.dayType].short+" Body");
+        var bg=badgeFor(s.dayType);
         h+='<div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;">'+
-           '<div class="h-badge '+bCls+'">'+bTxt+'</div>'+
-           '<div style="flex:1;"><div class="h-day">'+lbl+'</div>'+
+           '<div class="h-badge '+bg.cls+'">'+bg.txt+'</div>'+
+           '<div style="flex:1;"><div class="h-day">'+esc(dayTitle(s.dayType))+'</div>'+
            '<div class="h-sub">'+fmtDate(s.date)+(s._edited?"  ·  amended":"")+'</div></div></div>';
       });
     }
@@ -965,13 +1055,15 @@
       h+=cardioChooserHTML();
     } else if(step===0){
       h+=sheadHTML("Warm-Up","Every session, every time");
-      if(sess.dayType==="lower"){
+      if(hasKnee(sess.dayType)){
         h+='<button type="button" class="check" id="knee-toggle" aria-pressed="'+(sess.kneeFlag?"true":"false")+'" style="'+(sess.kneeFlag?"background:var(--mint-2);border-color:#EBD9A6;":"border-color:var(--line);")+'">'+
            '<div class="box" style="border-radius:50%;'+(sess.kneeFlag?"background:#C9A23B;border-color:#C9A23B;":"")+'">'+(sess.kneeFlag?"&#33;":"")+'</div>'+
            '<div><div class="t">Knee discomfort today?</div><div class="d">Tap if your knees are bothering you</div></div></button>';
-        h+='<div class="alert'+(sess.kneeFlag?" show":"")+'" id="knee-alert" role="status"><b>Go easy on the knees.</b> Consider skipping the squats and leg press today. Do extra hamstring curls and glute bridges instead.</div>';
+        var kmsg=PROGRAM[sess.dayType].kneeMsg||"Consider skipping the squats and leg press today. Do extra hamstring curls and glute bridges instead.";
+        h+='<div class="alert'+(sess.kneeFlag?" show":"")+'" id="knee-alert" role="status"><b>Go easy on the knees.</b> '+esc(kmsg)+'</div>';
       }
-      PROGRAM.warmup.forEach(function(w,i){
+      if(PROGRAM[sess.dayType].intro){ h+='<div class="cue" style="margin:0 0 10px;">'+esc(PROGRAM[sess.dayType].intro)+'</div>'; }
+      warmupOf(sess.dayType).forEach(function(w,i){
         h+='<button type="button" class="check'+(sess.warmup[i]?" on":"")+'" data-wu="'+i+'" aria-pressed="'+(sess.warmup[i]?"true":"false")+'"><div class="box">'+(sess.warmup[i]?"&#10003;":"")+'</div>'+
            '<div><div class="t">'+esc(w.name)+'</div><div class="d">'+esc(w.d)+'</div></div></button>';
       });
@@ -984,7 +1076,7 @@
       h+=sheadHTML(ex.name,"Exercise "+step+" of "+N);
       h+='<div class="card">';
       var repLabel = ex.kind==="time" ? (ex.reps) : (ex.kind==="steps" ? ex.reps : (ex.kind==="reps" ? ex.reps : ex.reps+" reps"));
-      h+='<div class="chips"><span class="chip">'+ex.sets+' sets &times; '+esc(repLabel)+'</span>'+(ex.weight?('<span class="chip w">'+esc(ex.weight)+'</span>'):'')+'</div>';
+      h+='<div class="chips"><span class="chip">'+ex.sets+' sets &times; '+esc(repLabel)+'</span>'+(ex.weight?('<span class="chip w">'+esc(ex.weight)+'</span>'):'')+(ex.equipment?('<span class="chip eq">'+esc(ex.equipment)+'</span>'):'')+'</div>';
       if(sess.dayType==="upper"){ h+='<div class="rom">Right arm: match the range of motion of your left on every rep.</div>'; }
 
       // progression: tappable suggestion, knee-gated hold, or the plain badge (never while editing)
@@ -1034,6 +1126,7 @@
     } else if(step===N+1){
       h+=sheadHTML("Cardio","After strength · 10-15 min target");
       h+='<div class="card">';
+      if(P.cardioNote){ h+='<div class="cue" style="margin-bottom:12px;">'+esc(P.cardioNote)+'</div>'; }
       PROGRAM.cardio.forEach(function(c){
         var on = sess.cardio.type===c;
         h+='<button type="button" class="opt'+(on?" on":"")+'" data-cardio="'+esc(c)+'" aria-pressed="'+(on?"true":"false")+'"><div class="r"></div><div class="t">'+esc(c)+'</div></button>';
@@ -1043,10 +1136,13 @@
       h+='<input type="hidden" id="cardio-type" value="'+esc(sess.cardio.type)+'">';
       h+='</div>';
     } else if(step===N+2){
-      h+=sheadHTML("Cool-Down", sess.dayType==="cardioday"
-        ? "Muscles are warm — ideal time for the right-side mobility work"
-        : "Right chest &amp; shoulder mobility");
-      PROGRAM.cooldown.forEach(function(w,i){
+      var dt=sess.dayType;
+      var cdSub = dt==="cardioday" ? "Muscles are warm — ideal time for the right-side mobility work"
+        : dt==="circuit" ? "Full mobility block — take your time today"
+        : (dt==="foundation"||dt==="strengthcarry") ? "Mobility &amp; flexibility — muscles are warm now"
+        : "Right chest &amp; shoulder mobility";
+      h+=sheadHTML("Cool-Down", cdSub);
+      cooldownOf(sess.dayType).forEach(function(w,i){
         h+='<button type="button" class="check'+(sess.cooldown[i]?" on":"")+'" data-cd="'+i+'" aria-pressed="'+(sess.cooldown[i]?"true":"false")+'"><div class="box">'+(sess.cooldown[i]?"&#10003;":"")+'</div>'+
            '<div><div class="t">'+esc(w.name)+'</div><div class="d">'+esc(w.d)+'</div></div></button>';
       });
@@ -1310,20 +1406,25 @@
   function exerciseSeries(){
     var sorted=DB.sessions.slice().sort(function(a,b){return a.date<b.date?-1:1;});
     var map={}, order=[];
+    // key by name AND dayType ("name|dayType"): the same exercise name lives in
+    // more than one routine with different prescriptions, and merging them would
+    // fabricate phantom PRs (e.g. Dead bug 8/side in Upper vs 12 total in Foundation)
+    function push(name, dayType, pt){
+      var k=name+"|"+dayType;
+      if(!map[k]){ map[k]={name:name, dayType:dayType, pts:[]}; order.push(k); }
+      map[k].pts.push(pt);
+    }
     sorted.forEach(function(s){
       // cardio days chart total minutes — the simplest honest fitness trend
       if(s.dayType==="cardioday"&&s.minutes!==""&&s.minutes!=null){
-        var cn="Cardio day (minutes)";
-        if(!map[cn]){ map[cn]=[]; order.push(cn); }
-        map[cn].push({date:s.date, v:Number(s.minutes), vol:0, unit:"min"});
+        push("Cardio day (minutes)", "cardioday", {date:s.date, v:Number(s.minutes), vol:0, unit:"min"});
       }
       (s.exercises||[]).forEach(function(e){
         var v=topVal(e.kind,e);
         if(v==null) return;
         var vol=0;
         if(e.kind==="wr"){ e.sets.forEach(function(st){ vol+=(Number(st.weight)||0)*(Number(st.reps)||0); }); }
-        if(!map[e.name]){ map[e.name]=[]; order.push(e.name); }
-        map[e.name].push({date:s.date, v:v, vol:vol, unit:progUnit(e.kind)});
+        push(e.name, s.dayType, {date:s.date, v:v, vol:vol, unit:progUnit(e.kind)});
       });
     });
     return {map:map, order:order};
@@ -1360,35 +1461,46 @@
     }
 
     // remember which items were expanded across the re-render
-    // (session rows key on data-t, progress rows on data-ex)
+    // (session rows key on data-t, progress rows on data-pk = "name|dayType")
     var openSet={};
     Array.prototype.forEach.call(document.querySelectorAll(".h-item.open"),function(it){
       if(it.dataset.t) openSet["t:"+it.dataset.t]=true;
-      if(it.dataset.ex) openSet["x:"+it.dataset.ex]=true;
+      if(it.dataset.pk) openSet["x:"+it.dataset.pk]=true;
     });
 
     var series=exerciseSeries();
-    var qualifies={};
-    series.order.forEach(function(n){ if(series.map[n].length>=2) qualifies[n]=true; });
+    var qualifies={};   // "name|dayType" -> has a progress row
+    var nameDays={};    // exercise name -> how many routines it appears in (for the tag)
+    series.order.forEach(function(k){
+      var e=series.map[k];
+      nameDays[e.name]=(nameDays[e.name]||0)+1;
+      if(e.pts.length>=2) qualifies[k]=true;
+    });
 
     // progress section
     var progH="";
     var orderAll=[];
-    ["lower","upper"].forEach(function(t){ PROGRAM[t].exercises.forEach(function(e){ orderAll.push(e.name); }); });
-    var names=series.order.slice().sort(function(a,b){
-      var ia=orderAll.indexOf(a), ib=orderAll.indexOf(b);
-      if(ia!==-1&&ib!==-1) return ia-ib;
-      if(ia!==-1) return -1; if(ib!==-1) return 1;
-      return a<b?-1:1;
+    ["foundation","strengthcarry","circuit","lower","upper"].forEach(function(t){ PROGRAM[t].exercises.forEach(function(e){ orderAll.push(e.name); }); });
+    var keys=series.order.slice().sort(function(a,b){
+      var ea=series.map[a], eb=series.map[b];
+      var ia=orderAll.indexOf(ea.name), ib=orderAll.indexOf(eb.name);
+      if(ia!==ib){
+        if(ia!==-1&&ib!==-1) return ia-ib;
+        if(ia!==-1) return -1; if(ib!==-1) return 1;
+        return ea.name<eb.name?-1:1;
+      }
+      return ea.dayType<eb.dayType?-1:1;
     });
-    names.forEach(function(name){
-      var pts=series.map[name];
+    keys.forEach(function(k){
+      var entry=series.map[k], pts=entry.pts;
       if(pts.length<2) return;
       var unit=pts[0].unit;
       var first=pts[0], lastP=pts[pts.length-1];
       var delta=lastP.v-first.v;
       var prIdx=0; pts.forEach(function(p,i){ if(p.v>=pts[prIdx].v) prIdx=i; });
       var pr=pts[prIdx];
+      // tag the routine when this name also lives in another routine
+      var tag=(nameDays[entry.name]>1)?(' <span style="opacity:.6;font-weight:600;">&middot; '+esc(PROGRAM[entry.dayType].short)+'</span>'):'';
       var dHtml = delta>0?('<span class="p-delta upd">+'+delta+' '+unit+'</span>')
         :(delta<0?('<span class="p-delta dnd">'+delta+' '+unit+'</span>'):'<span class="p-delta">&mdash;</span>');
       var volLine="";
@@ -1396,9 +1508,9 @@
         var pct = first.vol>0 ? Math.round((lastP.vol-first.vol)/first.vol*100) : null;
         volLine='<div class="p-stat">Volume &mdash; '+lastP.vol.toLocaleString()+' lbs last session'+(pct!=null?(' &middot; '+(pct>=0?'+':'')+pct+'% vs first'):'')+'</div>';
       }
-      progH+='<div class="h-item p-item" data-ex="'+esc(name)+'"'+'>'+
+      progH+='<div class="h-item p-item" data-pk="'+esc(k)+'">'+
         '<div class="h-top" role="button" tabindex="0" aria-expanded="false">'+
-        '<div class="h-meta"><div class="h-day">'+esc(name)+'</div><div class="h-sub">'+pts.length+' sessions logged</div></div>'+
+        '<div class="h-meta"><div class="h-day">'+esc(entry.name)+tag+'</div><div class="h-sub">'+pts.length+' sessions logged</div></div>'+
         dHtml+'<span class="p-latest" style="margin-left:8px;">'+lastP.v+' '+unit+'</span><div class="chev" style="margin-left:8px;">&#9660;</div></div>'+
         '<div class="h-body">'+
         '<div class="spark-wrap">'+sparklineSVG(pts,prIdx)+
@@ -1417,14 +1529,13 @@
       var P=PROGRAM[s.dayType];
       var doneEx=s.exercises.filter(function(e){return e.sets.some(function(st){return fmtSet(e.kind,st);});}).length;
       var sub=fmtDate(s.date)+(s._edited?"  ·  amended":"");
-      var bCls=s.dayType==="upper"?"up":(s.dayType==="cardioday"?"cd":"");
-      var bTxt=s.dayType==="upper"?"U":(s.dayType==="cardioday"?"C":"L");
+      var bg=badgeFor(s.dayType);
       var cOpt=(s.dayType==="cardioday"&&s.option)?PROGRAM.cardioday.options[s.option]:null;
       var title=s.dayType==="cardioday"
         ? ('Cardio Day'+(cOpt?(' &middot; '+esc(cOpt.name)):''))
-        : (P.short+' Body + Core &middot; '+doneEx+' exercise'+(doneEx===1?"":"s"));
+        : (esc(dayTitle(s.dayType))+' &middot; '+doneEx+' exercise'+(doneEx===1?"":"s"));
       h+='<div class="h-item" data-t="'+(s._t||"")+'">';
-      h+='<div class="h-top" role="button" tabindex="0" aria-expanded="false"><div class="h-badge '+bCls+'">'+bTxt+'</div>'+
+      h+='<div class="h-top" role="button" tabindex="0" aria-expanded="false"><div class="h-badge '+bg.cls+'">'+bg.txt+'</div>'+
          '<div class="h-meta"><div class="h-day">'+title+'</div><div class="h-sub">'+sub+'</div></div>'+
          '<div class="chev">&#9660;</div></div>';
       h+='<div class="h-body">';
@@ -1444,13 +1555,13 @@
         }
         if(s.rounds) h+='<div class="h-row"><span class="nm">Interval rounds</span><span class="vl">'+esc(s.rounds)+'</span></div>';
         var cdOnly=s.cooldown.filter(Boolean).length;
-        h+='<div class="h-tag">Checklists</div><div class="h-row"><span class="nm">Cool-down stretches</span><span class="vl">'+cdOnly+'/'+PROGRAM.cooldown.length+'</span></div>';
+        h+='<div class="h-tag">Checklists</div><div class="h-row"><span class="nm">Cool-down stretches</span><span class="vl">'+cdOnly+'/'+cooldownOf(s.dayType).length+'</span></div>';
       } else {
       h+='<div class="h-tag">Strength</div>';
       s.exercises.forEach(function(e){
         var v=lastLine(e.kind,e); if(!v) return;
-        var nm = qualifies[e.name]
-          ? '<span class="nm linked" role="button" tabindex="0" data-jump="'+esc(e.name)+'" title="View progress">'+esc(e.name)+'</span>'
+        var nm = qualifies[e.name+"|"+s.dayType]
+          ? '<span class="nm linked" role="button" tabindex="0" data-jump="'+esc(e.name+"|"+s.dayType)+'" title="View progress">'+esc(e.name)+'</span>'
           : '<span class="nm">'+esc(e.name)+'</span>';
         h+='<div class="h-row">'+nm+'<span class="vl">'+esc(v)+'</span></div>';
       });
@@ -1458,7 +1569,7 @@
         h+='<div class="h-tag">Cardio</div><div class="h-row"><span class="nm">'+esc(s.cardio.type||"Cardio")+'</span><span class="vl">'+esc(s.cardio.minutes||"?")+' min</span></div>';
       }
       var wuC=s.warmup.filter(Boolean).length, cdC=s.cooldown.filter(Boolean).length;
-      h+='<div class="h-tag">Checklists</div><div class="h-row"><span class="nm">Warm-up &amp; cool-down</span><span class="vl">'+wuC+'/'+PROGRAM.warmup.length+' &middot; '+cdC+'/'+PROGRAM.cooldown.length+'</span></div>';
+      h+='<div class="h-tag">Checklists</div><div class="h-row"><span class="nm">Warm-up &amp; cool-down</span><span class="vl">'+wuC+'/'+warmupOf(s.dayType).length+' &middot; '+cdC+'/'+cooldownOf(s.dayType).length+'</span></div>';
       }
       if(s.kneeFlag) h+='<div class="h-knee">&#9888; Knee discomfort flagged</div>';
       if(s.notes) h+='<div class="h-note">&ldquo;'+esc(s.notes)+'&rdquo;</div>';
@@ -1472,7 +1583,7 @@
 
     // re-apply expanded state
     Array.prototype.forEach.call(document.querySelectorAll(".h-item"),function(it){
-      var open=(it.dataset.t&&openSet["t:"+it.dataset.t])||(it.dataset.ex&&openSet["x:"+it.dataset.ex]);
+      var open=(it.dataset.t&&openSet["t:"+it.dataset.t])||(it.dataset.pk&&openSet["x:"+it.dataset.pk]);
       if(open){
         it.classList.add("open");
         var t=it.querySelector(".h-top"); if(t) t.setAttribute("aria-expanded","true");
@@ -1492,7 +1603,7 @@
         if(ev) ev.stopPropagation();
         var items=document.querySelectorAll(".p-item");
         for(var i=0;i<items.length;i++){
-          if(items[i].dataset.ex===el.dataset.jump){
+          if(items[i].dataset.pk===el.dataset.jump){
             items[i].classList.add("open");
             var t=items[i].querySelector(".h-top"); if(t) t.setAttribute("aria-expanded","true");
             items[i].scrollIntoView({behavior:"smooth",block:"center"});
